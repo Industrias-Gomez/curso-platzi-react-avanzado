@@ -2,18 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { Category } from '../Category'
 import { List, Item } from './styles'
 
-export const ListOfCategories = () => {
+function useCategoriesData () {
   const [categories, setCategories] = useState([])
 
+  const [loading, setLoading] = useState(false)
+
   useEffect(function () {
+    setLoading(true)
     window
       .fetch('https://petgram-server-two.vercel.app/categories')
       .then(res => res.json()) /* Converimos la respuesra Json */
       .then(response => {
         setCategories(response)
+        setLoading(false)
       })
   }, [])
 
+  return { categories, loading }
+}
+
+export const ListOfCategories = () => {
+  const { categories, loading } = useCategoriesData()
   const [showFixed, setShowFixed] = useState(false)
 
   useEffect(
@@ -38,14 +47,24 @@ export const ListOfCategories = () => {
   )
 
   const renderList = fixed => (
-    <List className={fixed ? 'fixed' : ''}>
-      {categories.map(category => (
-        <Item key={category.id}>
-          <Category {...category} />
+    <List fixed={fixed}>
+      {loading ? (
+        <Item key='loading'>
+          <Category />
         </Item>
-      ))}
+      ) : (
+        categories.map(category => (
+          <Item key={category.id}>
+            <Category {...category} />
+          </Item>
+        ))
+      )}
     </List>
   )
+
+  // if (loading) {
+  //   return 'Cargando...'
+  // }
 
   return (
     <>
