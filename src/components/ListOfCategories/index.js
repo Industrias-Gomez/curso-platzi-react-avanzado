@@ -14,13 +14,43 @@ export const ListOfCategories = () => {
       })
   }, [])
 
-  return (
-    <List>
+  const [showFixed, setShowFixed] = useState(false)
+
+  useEffect(
+    function () {
+      const onScroll = e => {
+        const newShowFixed = window.scrollY > 190
+        showFixed !== newShowFixed && setShowFixed(newShowFixed)
+      }
+
+      document.addEventListener(
+        'scroll',
+        onScroll
+      ) /* Escuchamos el evento scroll y ejecutamos el metodo onScroll */
+
+      return () =>
+        document.removeEventListener(
+          'scroll',
+          onScroll
+        ) /* Limpiamos el efecto cada vez que se vuelva a ejecutar */
+    },
+    [showFixed]
+  )
+
+  const renderList = fixed => (
+    <List className={fixed ? 'fixed' : ''}>
       {categories.map(category => (
         <Item key={category.id}>
           <Category {...category} />
         </Item>
       ))}
     </List>
+  )
+
+  return (
+    <>
+      {renderList()}
+      {showFixed && renderList(true)}
+    </>
   )
 }
