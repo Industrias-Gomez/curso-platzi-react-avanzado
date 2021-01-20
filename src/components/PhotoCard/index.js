@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Article, ImgWrapper, Img, Button } from './styles'
-import { MdFavoriteBorder } from 'react-icons/md'
+import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'
@@ -8,6 +8,20 @@ const DEFAULT_IMAGE =
 export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
   const element = useRef(null)
   const [show, setShow] = useState(false)
+
+  const key = `like-${id}` // Creamos un id unico que obtenemos de la PhotoCard
+  const [liked, setLiked] = useState(() => {
+    // Al estado le pasamos useState le pasamos una funcion
+    try {
+      const like = window.localStorage.getItem(key) // Utilizamos el localStorage del navegador para poder guardar los likes
+      return like
+    } catch (error) {
+      return false
+    }
+  })
+
+  // console.log(liked)
+
   useEffect(
     function () {
       Promise.resolve(
@@ -30,6 +44,18 @@ export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
     [element]
   )
 
+  const Icon = liked ? MdFavorite : MdFavoriteBorder // Validamos los cambios con una ternaria
+
+  const setLocalStorage = value => {
+    // Cambiamos el estado de setLocalStorage
+    try {
+      window.localStorage.setItem(key, value) // Agregamos el key y agregamos el valor enviado desde el onClick (!liked)
+      setLiked(value) // Actualizamos el estado
+    } catch (error) {
+      console.error(error) // En caso de existir un error lo mostramos
+    }
+  }
+
   return (
     <Article ref={element}>
       {show && (
@@ -39,8 +65,8 @@ export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
               <Img src={src} alt='photo' />
             </ImgWrapper>
           </a>
-          <Button>
-            <MdFavoriteBorder size='32px' />
+          <Button onClick={() => setLocalStorage(!liked)}>
+            <Icon size='32px' />
             {likes} likes!
           </Button>
         </>
