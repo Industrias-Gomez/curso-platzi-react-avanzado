@@ -14,13 +14,13 @@ export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
     // Al estado le pasamos useState le pasamos una funcion
     try {
       const like = window.localStorage.getItem(key) // Utilizamos el localStorage del navegador para poder guardar los likes
-      return like
+      return JSON.parse(like) // Lo parseamos para que NO retorne un string con el valor “false” sino un Boolean
     } catch (error) {
       return false
     }
   })
 
-  // console.log(liked)
+  console.log(liked)
 
   useEffect(
     function () {
