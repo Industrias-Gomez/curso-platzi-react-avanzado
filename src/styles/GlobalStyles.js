@@ -12,6 +12,7 @@ export const GlobalStyles = createGlobalStyle`
         
   ul, li, h1, h2, h3, p, button {
     margin: 0;
+    padding: 0;
   }
 
   ul {
