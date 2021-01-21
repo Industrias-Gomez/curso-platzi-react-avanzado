@@ -21,10 +21,26 @@ export const Button = styled.button`
   display: block;
   width: 100%;
   text-align: center;
+  &[disabled] {
+    opacity: .3;
+  }
 `
 
 export const Title = styled.h2`
   font-size: 16px;
   font-weight: 500;
   padding: 8px 0;
+`
+
+export const Error = styled.span`
+  display: block;
+  font-size: 14px;
+  color: red;
+  text-align: center;
+  padding: 8px 0px;
+  margin: 10px 0px 10px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: rgba(215, 44, 44, 0.3);
+  background: rgba(215, 44, 44, 0.3);
 `
