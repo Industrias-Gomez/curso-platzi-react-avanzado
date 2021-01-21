@@ -9,9 +9,13 @@ const Provider = ({ children }) => {
 
   const value = {
     isAuth,
-    activateAuth: token => {
+    activateAuth: token => { // Metodo para iniciar sesion y guadarla en el storage
       setIsAuth(true)
       window.sessionStorage.setItem('token', token)
+    },
+    removeAuth: () => { // Metodo para cerarar sesion y eliminarla del storage
+      setIsAuth(false)
+      window.sessionStorage.removeItem('token')
     }
   }
 
