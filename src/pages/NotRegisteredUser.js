@@ -2,6 +2,7 @@ import React from 'react'
 import Context from '../Context'
 import { UserForm } from '../components/UserForm'
 import { RegisterMutation } from '../container/RegisterMutation'
+import { LoginMutation } from '../container/LoginMutation'
 
 export const NotRegisteredUser = () => (
   <Context.Consumer>
@@ -16,12 +17,41 @@ export const NotRegisteredUser = () => (
                 register({ variables }).then(activateAuth) //Validamos el resultado de la promesa con el resultado validamos que se registro el usuario
               }
 
-              const errorMsg = error && 'El usuario ya existe o hay algún problema.'
+              const errorMsg =
+                error && 'El usuario ya existe o hay algún problema.'
 
-              return <UserForm disabled={loading} error={errorMsg} title='Registrarse' onSubmit={onSubmit} />
+              return (
+                <UserForm
+                  disabled={loading}
+                  error={errorMsg}
+                  title='Registrarse'
+                  onSubmit={onSubmit}
+                />
+              )
             }}
           </RegisterMutation>
-          <UserForm title='Iniciar sesión' onSubmit={activateAuth} />
+
+          <LoginMutation>
+            {(login, { data, loading, error }) => {
+              const onSubmit = ({ email, password }) => {
+                const input = { email, password }
+                const variables = { input }
+                login({ variables }).then(activateAuth) //Validamos el resultado de la promesa con el resultado validamos que se registro el usuario
+              }
+
+              const errorMsg =
+                error && 'La contraseña no es correcta o el usuario ya existe.'
+
+              return (
+                <UserForm
+                  disabled={loading}
+                  error={errorMsg}
+                  title='Iniciar sesión'
+                  onSubmit={onSubmit}
+                />
+              )
+            }}
+          </LoginMutation>
         </>
       )
     }}
