@@ -1,7 +1,13 @@
-## curso-platzi-react-avanzado ⚛️
+# Clases del Curso de React Avanzado
+#### Proyecto del curso
 
-**¡Sígueme en Youtube para más contenido de React y Javascript!** 👉 https://www.youtube.com/midudev
+![proyect](https://static.platzi.com/media/landing-projects/Proyecto-react-avanzado.png)
 
-**¡Sígueme en Twitch para streams sobre desarrollo web!** 👉 https://www.twitch.tv/midudev
+## Petgram
 
-Repositorio con el código del [Curso Avanzado de React de Platzi](https://platzi.com/cursos/react-avanzado/)
+Crea una aplicación para subir y compartir fotos de mascotas usando Webpack, GraphQL, React Hooks, React Router, SEO y PWAs.
+
+
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
